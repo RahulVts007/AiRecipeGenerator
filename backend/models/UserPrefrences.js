@@ -6,18 +6,19 @@ class UserPreferences {
 
     static async upsert(userId , preferences){
         const {
-            dietary_resstrictions = [],
+            dietary_restrictions = [],
             allergies = [],
             preferred_cuisines = [],
             default_servings = 4,
             measurement_unit = 'metric'
         } = preferences;
 
+        // this query handles both updation of preferences and insering new rows of preferences 
         const result = await db.query(
             `INSERT INTO user_preferences
             (user_id , dietary_restrictions , allergies , preferred_cuisines , default_servings , measurement_unit)
-            VALUES ($! , $2 , $3 , $4 , $5 , $6)
-            ON CONFLICT
+            VALUES ($1 , $2 , $3 , $4 , $5 , $6)
+            ON CONFLICT(user_id)
             DO UPDATE SET
              dietary_restrictions = $2,
              allergies = $3,
@@ -25,7 +26,7 @@ class UserPreferences {
              default_servings = $5,
              measurement_unit = $6
             RETURNING *`,
-            [userId , dietary_resstrictions , allergies , preferred_cuisines , default_servings , measurement_unit]
+            [userId , dietary_restrictions , allergies , preferred_cuisines , default_servings , measurement_unit]
         );
 
         return result.rows[0];
