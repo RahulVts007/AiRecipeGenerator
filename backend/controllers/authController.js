@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import User from '../models/User.js';
 import UserPreferences from '../models/UserPrefrences.js';
 import jwt from 'jsonwebtoken';
