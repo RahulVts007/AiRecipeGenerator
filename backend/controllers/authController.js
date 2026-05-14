@@ -164,7 +164,7 @@ export const requestPasswordReset = async (req , res , next) => {
         // Not checking if user exist or not for security reasons 
         res.json({
             success: true,
-            message: 'If a account exist with this email, a pssword reset link has been sent'
+            message: 'If a account exist with this email, a password reset link has been sent'
         });
 
     }
